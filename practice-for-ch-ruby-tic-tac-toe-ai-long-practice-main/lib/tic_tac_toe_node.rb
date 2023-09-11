@@ -20,9 +20,19 @@ class TicTacToeNode
   # This method generates an array of all moves that can be made after
   # the current move.
   def children
+    dups_array=[]
     board.dup
     TicTacToeNode.new(board.dup, @next_mover_mark, self)
     @next_mover_mark = board.next_mark 
+    board.each_with_index do |ele, idx|
+      board.each_with_index do |ele2,idx2|
+        dup=board.dup
+        if dup[idx][idx2].empty?
+          dup[idx][idx2]=@next_mover_mark
+        end
+      end
+    end
+    next_mover_mark=dup.next_mark
   end
 end
 
