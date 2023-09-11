@@ -21,18 +21,27 @@ class TicTacToeNode
   # the current move.
   def children
     dups_array=[]
-    board.dup
-    TicTacToeNode.new(board.dup, @next_mover_mark, self)
-    @next_mover_mark = board.next_mark 
-    board.each_with_index do |ele, idx|
-      board.each_with_index do |ele2,idx2|
-        dup=board.dup
-        if dup[idx][idx2].empty?
-          dup[idx][idx2]=@next_mover_mark
-        end
-      end
+
+    board.open_positions.each do |pos|
+      dup = board.dup 
+      dup[pos] = @next_mover_mark
+      dups_array << TicTacToeNode.new(dup, dup.next_mark, pos)
     end
-    next_mover_mark=dup.next_mark
+
+    dups_array
+
+    # board.rows.each_with_index do |ele, idx|
+    #   board.rows.each_with_index do |ele2,idx2|
+    #     p idx 
+    #     p idx2
+    #     dup=board.dup
+    #     if dup[idx][idx2].empty?
+    #       dup[idx][idx2]=@next_mover_mark
+    #       dups_array << TicTacToeNode(dup, dup.next_mark, self)
+    #     end
+    #   end
+    # end
   end
 end
+
 
