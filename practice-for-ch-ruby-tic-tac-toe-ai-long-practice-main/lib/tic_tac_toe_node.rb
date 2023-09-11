@@ -10,6 +10,9 @@ class TicTacToeNode
   
 
   def losing_node?(evaluator)
+    return true if board.over? && board.winner != evaluator
+    return false if board.over? && (board.winner==nil || board.winner==evaluator)
+   children.all? {|child| child.losing_node?(evaluator)} 
 
   end
 
@@ -29,18 +32,6 @@ class TicTacToeNode
     end
 
     dups_array
-
-    # board.rows.each_with_index do |ele, idx|
-    #   board.rows.each_with_index do |ele2,idx2|
-    #     p idx 
-    #     p idx2
-    #     dup=board.dup
-    #     if dup[idx][idx2].empty?
-    #       dup[idx][idx2]=@next_mover_mark
-    #       dups_array << TicTacToeNode(dup, dup.next_mark, self)
-    #     end
-    #   end
-    # end
   end
 end
 
