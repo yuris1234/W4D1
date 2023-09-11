@@ -1,4 +1,5 @@
 require_relative 'tic_tac_toe'
+require "byebug"
 
 class TicTacToeNode
   attr_reader :board, :next_mover_mark, :prev_move_pos
@@ -10,9 +11,17 @@ class TicTacToeNode
   
 
   def losing_node?(evaluator)
-    return true if board.over? && board.winner != evaluator
-    return false if board.over? && (board.winner==nil || board.winner==evaluator)
-   children.all? {|child| child.losing_node?(evaluator)} 
+    # return false if board.tied?
+    # return true if board.over? && board.winner != evaluator
+    # return false if board.over? && (board.winner==nil || board.winner==evaluator)
+    if board.over? 
+      return board.won? && board.winner != evaluator
+    end
+    if evaluator == next_mover_mark
+      children.all? {|child| child.losing_node?(evaluator)} 
+    else
+      children.any?{|child|child.losing_node?(evaluator)}
+    end
 
   end
 
